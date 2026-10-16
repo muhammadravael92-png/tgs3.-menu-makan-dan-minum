@@ -1,0 +1,27 @@
+name: Build C++ Lanjutan Mini Kasir
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Install G++ Compiler
+      run: sudo apt-get update && sudo apt-get install -y g++
+
+    - name: Compile Program
+      run: g++ -o mini_kasir main.cpp
+
+    - name: Upload Executable Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: program-lanjutan-kasir
+        path: mini_kasir
