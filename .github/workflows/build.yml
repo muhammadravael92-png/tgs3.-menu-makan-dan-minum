@@ -1,27 +1,42 @@
-name: Build C++ Lanjutan Mini Kasir
+#include <iostream>
+using namespace std;
 
-on:
-  push:
-    branches: [ "main", "master" ]
-  pull_request:
-    branches: [ "main", "master" ]
+int main() {
+    string menu[5] = {"Soto", "Rawon", "Pecel", "Teh", "Kopi"};
+    int harga[5] = {15000, 20000, 10000, 3000, 5000};
+    int pilih, jumlah;
+    char ulang;
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+    do {
+        cout << "\n=== MINI KASIR ===\n";
 
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
+        for (int i = 0; i < 5; i++)
+            cout << i + 1 << ". " << menu[i]
+                 << " - Rp" << harga[i] << endl;
 
-    - name: Install G++ Compiler
-      run: sudo apt-get update && sudo apt-get install -y g++
+        cout << "Pilih menu: ";
+        cin >> pilih;
 
-    - name: Compile Program
-      run: g++ -o mini_kasir main.cpp
+        if (pilih < 1 || pilih > 5) {
+            cout << "Menu tidak tersedia!\n";
+            continue;
+        }
 
-    - name: Upload Executable Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: program-lanjutan-kasir
-        path: mini_kasir
+        cout << "Jumlah: ";
+        cin >> jumlah;
+
+        if (jumlah <= 0) {
+            cout << "Jumlah tidak valid!\n";
+            continue;
+        }
+
+        cout << "Total: Rp"
+             << harga[pilih - 1] * jumlah << endl;
+
+        cout << "Ulangi? (y/n): ";
+        cin >> ulang;
+
+    } while (ulang == 'y' || ulang == 'Y');
+
+    return 0;
+}
